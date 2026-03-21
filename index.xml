@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Home on Too Many Exceptions</title>
+    <link>https://TooManyExceptions.github.io/</link>
+    <description>Recent content in Home on Too Many Exceptions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Thu, 19 Mar 2026 20:28:10 +0000</lastBuildDate>
+    <atom:link href="https://TooManyExceptions.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Recommended Sites</title>
+      <link>https://TooManyExceptions.github.io/recommended-sites/</link>
+      <pubDate>Thu, 19 Mar 2026 20:28:10 +0000</pubDate>
+      <guid>https://TooManyExceptions.github.io/recommended-sites/</guid>
+      <description>Sites Learn X in Y minutes A website which has concise guides on lots of programming languages Inigo Quilez Blog which has lots of details on writing shaders. YouTube Computerphile Channel that talks about lots of computer science topics. The Coding train Videos on processing and p5js, very good for inspiration for new topics. Sebastian Lague Videos on exploring programming various different topics like ray tracing. Pezzza&amp;rsquo;s Work Videos on AI networks, colony simulations, physics simulations and many more topics.</description>
+    </item>
+    <item>
+      <title>Ray Marching</title>
+      <link>https://TooManyExceptions.github.io/projects/ray-marching/</link>
+      <pubDate>Wed, 18 Mar 2026 20:33:26 +0000</pubDate>
+      <guid>https://TooManyExceptions.github.io/projects/ray-marching/</guid>
+      <description>Explanation Ray marching is a rendering technique which sends rays out from the camera, and marches each ray forwards until the ray is close enough to an object in the scene.&#xA;The 3D scene is defined using a function which returns the minimum distance from the closest object to a given 3D point. This is called the signed distance function.&#xA;You can find lots of signed distance functions for simple 3D shapes the website made by Inigo Quilez.</description>
+    </item>
+    <item>
+      <title>L Systems</title>
+      <link>https://TooManyExceptions.github.io/projects/l-systems/</link>
+      <pubDate>Tue, 17 Mar 2026 20:44:19 +0000</pubDate>
+      <guid>https://TooManyExceptions.github.io/projects/l-systems/</guid>
+      <description>Explanation L systems carry out simple character to string replacements.&#xA;You begin with a string (called the axiom) and then loop though each character in the string. Each character is then replaced by a string based on some rules. This process is repeated however many times you would like, usually called the number of iterations or the depth.&#xA;Example Rules Character String A AB B A Iterations In the following example I have used the ^ character to show the current character the algorithm is looking at.</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>https://TooManyExceptions.github.io/about/</link>
+      <pubDate>Tue, 17 Mar 2026 20:21:10 +0000</pubDate>
+      <guid>https://TooManyExceptions.github.io/about/</guid>
+      <description>About me Hello I am a student currently in college taking:&#xA;Computer science Physics Double maths Projects I do a lot of projects in my free time which you can view on my project page</description>
+    </item>
+  </channel>
+</rss>

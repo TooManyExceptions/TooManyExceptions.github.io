@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="/css/style.css">
+
+		<title>L Systems • Too Many Exceptions</title>
+	</head>
+	<body>
+		<div class="navigation">
+			Too Many Exceptions
+			<a href="/about">About</a>
+			<a href="/">Home</a>
+		</div>
+
+		<br>
+		<hr>
+		<br>
+
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#explanation">Explanation</a>
+      <ul>
+        <li><a href="#example">Example</a></li>
+        <li><a href="#uses">Uses</a></li>
+      </ul>
+    </li>
+    <li><a href="#2d-l-system">2D L system</a></li>
+    <li><a href="#3d-l-system">3D L system</a></li>
+  </ul>
+</nav>
+
+		<h1>L Systems</h1>
+
+		
+	<article>
+		<h2 id="explanation">Explanation</h2>
+<p>L systems carry out simple character to string replacements.</p>
+<p>You begin with a string (called the axiom) and then loop though each character in the string. Each character is then replaced by a string based on some rules. This process is repeated however many times you would like, usually called the number of iterations or the depth.</p>
+<h3 id="example">Example</h3>
+<h4 id="rules">Rules</h4>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>String</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>AB</td>
+</tr>
+<tr>
+<td>B</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+<h4 id="iterations">Iterations</h4>
+<p>In the following example I have used the ^ character to show the current character the algorithm is looking at.</p>
+<h5 id="start">Start</h5>
+<p>The first string also known as the axiom will be &ldquo;A&rdquo; for this example.</p>
+<pre tabindex="0"><code>A
+^
+</code></pre><h5 id="iteration-1">Iteration 1</h5>
+<p>Change A to AB and move to next character.</p>
+<pre tabindex="0"><code>AB
+  ^
+</code></pre><p>This iteration has ended since we have reached the end of the string.</p>
+<h5 id="iteration-2">Iteration 2</h5>
+<p>Start at the beginning of the last iteration&rsquo;s string.</p>
+<pre tabindex="0"><code>AB
+^
+</code></pre><p>A must be replaced with AB, then move on to the next character.</p>
+<pre tabindex="0"><code>ABB
+  ^
+</code></pre><p>B must be replaced with A, then move on to the next character.</p>
+<pre tabindex="0"><code>ABA
+   ^
+</code></pre><p>We have reached the end of the string meaning this iteration is over.</p>
+<h4 id="example-review">Example review</h4>
+<p>This L system can be used to model the growth of algae and was the original L system that Aristid Lindenmayer made. With L systems you can theoretically choose any number of iterations you would like to do. However the string will never shrink in size, meaning that due to memory constraints the number of iterations is limited.</p>
+<h3 id="uses">Uses</h3>
+<p>L systems have a fractal nature making them great for generating fractal graphics. In this case each character can also have an action such as &ldquo;move forwards&rdquo; or &ldquo;turn left&rdquo;, then a program can carry out these instruction to draw the fractal. This way of drawing graphics is called <a href="https://en.wikipedia.org/wiki/Turtle_graphics">turtle graphics</a>.</p>
+<h2 id="2d-l-system">2D L system</h2>
+<p>I started with a 2D L system generator.</p>
+<p>F -&gt; FF+[+F-F-F]-[-F+F+F] <br>
+* -&gt; * <br>
+(where * matches any character)</p>
+<p>where the characters have the following actions:</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F</td>
+<td>Move forwards</td>
+</tr>
+<tr>
+<td>+</td>
+<td>Turn left 25°</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Turn right 25°</td>
+</tr>
+<tr>
+<td>[</td>
+<td>Save current position</td>
+</tr>
+<tr>
+<td>]</td>
+<td>Return to last saved position</td>
+</tr>
+</tbody>
+</table>
+<p>I also have an array of colours so that when the save character is read it changes to the next colour, and when the load character is read it changes to the previous colour. This wasn&rsquo;t necessary but I thought it looked cool.</p>
+<p>This generated a nicely detailed 2D fractal tree:</p>
+<p><img src="/images/2d-l-system.png" alt="2D L system"></p>
+<h2 id="3d-l-system">3D L system</h2>
+<p>I wanted to make an L system which was 3D, and after some playing around I found the following configuration.</p>
+<p>I added two more instructions to rotate along a different axis.</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>F</td>
+<td>Move forwards</td>
+</tr>
+<tr>
+<td>+</td>
+<td>Turn left 20°</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Turn right 20°</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Turn left 20° about the y axis</td>
+</tr>
+<tr>
+<td><strong>0</strong></td>
+<td>Turn right 20° about the y axis</td>
+</tr>
+<tr>
+<td>[</td>
+<td>Save current position</td>
+</tr>
+<tr>
+<td>]</td>
+<td>Return to last saved position</td>
+</tr>
+</tbody>
+</table>
+<p>Then I changed the rules to this:</p>
+<p>F -&gt; FF+0[+F-F-F9]-0[-F+9F+F] <br>
+* -&gt; *</p>
+<p>This generated this 3D fractal plant thing, which I am very pleased with:</p>
+<p><img src="/images/l-systems.png" alt="3D L system"></p>
+<p>It looks fairly realistic in 3D. Especially after making the lines transparent and the background white, because this made more dense areas darker.</p>
+<p>In the future I would like to make an interface for generating and viewing L systems more easily, because at the moment they are hardcoded in the program.</p>
+
+	</article>
+
+	</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="/css/style.css">
+
+		<title>Ray Marching • Too Many Exceptions</title>
+	</head>
+	<body>
+		<div class="navigation">
+			Too Many Exceptions
+			<a href="/about">About</a>
+			<a href="/">Home</a>
+		</div>
+
+		<br>
+		<hr>
+		<br>
+
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#explanation">Explanation</a></li>
+    <li><a href="#showcase">Showcase</a>
+      <ul>
+        <li><a href="#simple-raymarcher">Simple raymarcher</a></li>
+        <li><a href="#raymarcher-with-basic-lighting">Raymarcher with basic lighting</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+		<h1>Ray Marching</h1>
+
+		
+	<article>
+		<h2 id="explanation">Explanation</h2>
+<p>Ray marching is a rendering technique which sends rays out from the camera, and marches each ray forwards until the ray is close enough to an object in the scene.</p>
+<p>The 3D scene is defined using a function which returns the minimum distance from the closest object to a given 3D point. This is called the signed distance function.</p>
+<p>You can find lots of signed distance functions for simple 3D shapes the <a href="https://iquilezles.org/articles/distfunctions">website made by Inigo Quilez</a>.</p>
+<p>Each ray from the camera is marched the distance returned by the signed distance function, until the signed distance function gives a low enough distance for it to be counted as being on the surface. By only marching the minimum distance this algorithm is guaranteed to not overshoot the object.</p>
+<dl>
+<dt>Raymarching</dt>
+<dd>A way to render a 3D scene</dd>
+<dd>Uses a signed distance function to define the scene with objects such as:</dd>
+<dd><ul>
+<li>Spheres</li>
+</ul>
+</dd>
+<dd><ul>
+<li>Cubes</li>
+</ul>
+</dd>
+<dd><ul>
+<li>Fractals</li>
+</ul>
+</dd>
+<dd><ul>
+<li>Tetrahedrons</li>
+</ul>
+</dd>
+<dt>Signed distance function</dt>
+<dd>A function which returns the minimum distance from a surface in the scene</dd>
+<dd><ul>
+<li>Positive outside the object</li>
+</ul>
+</dd>
+<dd><ul>
+<li>Zero on the surface of the object</li>
+</ul>
+</dd>
+<dd><ul>
+<li>Negative inside the object</li>
+</ul>
+</dd>
+<dd>The signed distance function of multiple objects is just the minimum distance between the objects</dd>
+<dd><ul>
+<li>Calculate the distance away from each object</li>
+</ul>
+</dd>
+<dd><ul>
+<li>Return the shortest out of those distances</li>
+</ul>
+</dd>
+</dl>
+<p>Raymarching has some advantages over other forms of rendering because the space can be transformed more easily. For example by taking the modulus of the position into the signed distance function in the right way, you can repeat an object. This means you can have objects seemingly repeat forever, without much of a performance penalty. You can also do reflections and scaling, allowing you to render 3D fractals like the Sierpiński tetrahedron.</p>
+<h2 id="showcase">Showcase</h2>
+<p>All the following examples I programmed as a fragment shader written in GLSL on <a href="www.shadertoy.com">Shadertoy</a>. This means it runs faster that it would have on my CPU, since GPUs have more cores. They are therefore more fit for casting lots of rays in parallel, despite each core usually having worse performance than a CPU.</p>
+<h3 id="simple-raymarcher">Simple raymarcher</h3>
+<h4 id="space-repetition">Space repetition</h4>
+<p>The following picture shows what I meant by being able to use the modulus operator to repeat an object.</p>
+<p><img src="/images/ray-marching.png" alt="3D space repetition"></p>
+<h3 id="raymarcher-with-basic-lighting">Raymarcher with basic lighting</h3>
+<p>Next I wanted to add lighting to the raymarcher.</p>
+<p>This lighting uses the direction of the face of an object and compares it to the direction of a global light source to find how bright the surface should appear.</p>
+<p>To do this I calculate the normal vector to the surface, once a ray hits the surface of an object by doing the derivative of the signed distance function. Giving the direction of the face the ray landed on. Then I do the dot product between the light direction and the normal vector, to basically get how much the face is pointing in the direction of the light. Then colour it based on that.</p>
+<p><img src="/images/ray-marching-basic-lighting.png" alt="Basic lighting"></p>
+<p>This picture also shows how you can easily add and subtract objects from each other. This is using the maximum of two minimum distances from the two shapes (cube and sphere in this case) with the distance to the shape you want to be subtracted as a negative number. You can even combine shapes in a smooth way leading to the shapes kind of melding into each other.</p>
+<p><img src="/images/ray-marching-smooth-union.png" alt="Smooth union"></p>
+
+	</article>
+
+	</body>
+</html>

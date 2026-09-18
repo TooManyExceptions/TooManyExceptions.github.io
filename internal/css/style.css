@@ -1,20 +1,7 @@
 :root
 {
-	--main-colour: black;
-	--accent-colour: white;
-	--accent2-colour: gray;
-	--accent3-colour: green;
-
-	--main-font-size: 100%;
+	--main-font-size: 1rem;
 }
-
-/*@media screen and (orientation:portrait)
-{
-	:root
-	{
-		--main-font-size: 100%;
-	}
-}*/
 
 body
 {
@@ -22,15 +9,20 @@ body
 	color: var(--accent-colour);
 
 	font-family: monospace, 'Lucida Console';
-	/*font-family: 'Courier New', Courier, monospace;*/
 	font-size: var(--main-font-size);
 	margin: 2%;
 }
 
-body img
+select
 {
-	max-width: fit-content;
+	background-color: var(--main-colour);
+	color: var(--accent-colour);
+	border-color: var(--accent2-colour);
+
+	border-style: solid;
+	font-family: monospace, 'Lucida Console';
 }
+
 body hr
 {
 	color: var(--accent2-colour);
@@ -43,7 +35,7 @@ body a
 body a:hover
 {
 	background-color: var(--accent-colour);
-	color: black;
+	color: var(--main-colour);
 	transition: 0.5s ease all;
 }
 .levitate:hover
@@ -54,7 +46,7 @@ body a:hover
 body strong
 {
 	color: var(--accent3-colour);
-	text-decoration: overline 1px;
+    font-weight: bolder;
 }
 
 table th
@@ -108,18 +100,62 @@ table td
 .grid-container
 {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(1, 1fr);
 	gap: 10px;
 	grid-auto-rows: minmax(100px, auto);
 }
 
 .grid-container img
 {
+	max-height: 100px;
+}
+
+.grid-container a
+{
+	color: var(--accent-colour);
+	text-decoration: none;
+
+	padding-left: 5px;
+	padding-right: 5px;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 5px;
+	border-color: var(--accent2-colour);
+}
+
+.portfolio-grid-container
+{
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	grid-auto-rows: minmax(100px, auto);
+}
+
+.portfolio-grid-container img
+{
 	max-width: 100%;
 	max-height: 100%;
+}
+
+.portfolio-grid-container a
+{
+	color: var(--accent-colour);
+	/*text-decoration-color: grey;*/
+	text-decoration: none;
+
+	padding-left: 5px;
+	padding-right: 5px;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 5px;
+	border-color: var(--accent2-colour);
 }
 
 body article
 {
 	max-width: 60%;
+}
+body article img
+{
+	max-width: 100%;
 }

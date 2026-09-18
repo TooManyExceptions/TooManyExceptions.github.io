@@ -1,16 +1,28 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/internal/css/style.css"/>
+		<link rel="stylesheet" href="/internal/css/dark.css" id="theme"/>
+
+		
+			<link rel="stylesheet" href="/katex/css/katex.min.css" integrity="sha384-u1zONI5gPXUx0UKI62c75/zww972y0v2rSK5ZYlVdS6xEuWDeZWUI66v6t1gvlXJ" crossorigin="anonymous">
+
+                
+                <script defer src="/katex/js/katex.min.js" integrity="sha384-ykMNcWQhhTUb0YV9SPpPUFURHZ+tWmubkakGBP+OgNK/UXdO2gtzglWx0Rj9hnO3" crossorigin="anonymous"></script>
+
+                
+                <script defer src="/katex/js/auto-render.min.js" integrity="sha384-bjyGPfbij8/NDKJhSGZNP/khQVgtHUE5exjm4Ydllo42FwIgYsdLO2lXGmRBf5Mz" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+		
+
+		<link rel="icon" type="image/x-icon" href="/internal/favicon/16x16.ico"/>
 
 		<title>Ray Marching • Too Many Exceptions</title>
 	</head>
 	<body>
-		<div class="navigation">
+		<nav class="navigation">
 			Too Many Exceptions
-			<a href="/about">About</a>
 			<a href="/">Home</a>
-		</div>
+		</nav>
 
 		<br>
 		<hr>
@@ -18,11 +30,11 @@
 
 		<nav id="TableOfContents">
   <ul>
-    <li><a href="#explanation">Explanation</a></li>
+    <li><a href="#explanation-skip-to-showcaseshowcase">Explanation (<a href="#showcase">skip to showcase</a>)</a></li>
     <li><a href="#showcase">Showcase</a>
       <ul>
-        <li><a href="#simple-raymarcher">Simple raymarcher</a></li>
-        <li><a href="#raymarcher-with-basic-lighting">Raymarcher with basic lighting</a></li>
+        <li><a href="#simple-ray-marcher-with-pixel-colour-only-based-on-distance">Simple ray marcher with pixel colour only based on distance</a></li>
+        <li><a href="#ray-marcher-with-basic-lighting">Ray marcher with basic lighting</a></li>
       </ul>
     </li>
   </ul>
@@ -30,15 +42,56 @@
 
 		<h1>Ray Marching</h1>
 
+		<table>
+			
+				<tr>
+					<td>Project</td>
+					<td>15/08/24</td>
+				</tr>
+			
+			
+				<tr>
+					<td>Published</td>
+					<td>18/03/26</td>
+				</tr>
+			
+			
+				<tr>
+					<td>Last Modified</td>
+					<td>18/09/26</td>
+				</tr>
+			
+		</table>
+
+		
+			<p>Tags:</p>
+			<ul>
+			
+				<li><a href="/tags/graphical/">Graphical</a></li>
+			
+			</ul>
+		
+
+		<p>Theme: <select id="themeSelector">
+			<option value="light">Light</option>
+			<option value="dark">Dark</option>
+		</select></p>
+		<script src="/internal/js/themeSwitcher.js"></script>
+
+		<br>
+		<hr>
+		<br>
+
 		
 	<article>
-		<h2 id="explanation">Explanation</h2>
-<p>Ray marching is a rendering technique which sends rays out from the camera, and marches each ray forwards until the ray is close enough to an object in the scene.</p>
-<p>The 3D scene is defined using a function which returns the minimum distance from the closest object to a given 3D point. This is called the signed distance function.</p>
-<p>You can find lots of signed distance functions for simple 3D shapes the <a href="https://iquilezles.org/articles/distfunctions">website made by Inigo Quilez</a>.</p>
-<p>Each ray from the camera is marched the distance returned by the signed distance function, until the signed distance function gives a low enough distance for it to be counted as being on the surface. By only marching the minimum distance this algorithm is guaranteed to not overshoot the object.</p>
+		<h2 id="explanation-skip-to-showcaseshowcase">Explanation (<a href="#showcase">skip to showcase</a>)</h2>
+<p>Ray marching is a ray based rendering technique, which can be used for 3D graphics. A ray is defined as a line which starts from a point in a specific direction, but doesn&rsquo;t have a specified end point.</p>
+<p>In its most basic case called Sphere tracing, rays are sent out from the camera, each ray corresponding to a pixel. The starting point of the ray moves forwards in the direction of the ray, until the ray is close enough to the surface of an object in the scene. In ray marching they call this process marching each ray forward. The distance marched each time is the minimum distance from the current ray start position to any part of the surfaces in the scene.</p>
+<p>The 3D scene is defined using a function which returns this minimum distance to the closest object surface, from given point. If the given point is inside an object the function returns a negative number. This kind of function is called a signed distance function, because of the change in sign from the outside of a surface to the inside (positive to negative).</p>
+<p>You can find lots of signed distance functions for simple 3D shapes on <a href="https://iquilezles.org/articles/distfunctions">this website made by Inigo Quilez</a>.</p>
+<p>More specifically now the signed distance function has been defined. Each ray from the camera is marched the distance returned from the signed distance function with the current ray start position as an input, until the signed distance function gives a low enough distance for it to be counted as being on the surface. By only marching the minimum distance this algorithm is guaranteed to not overshoot the object. Usually there is a programmed upper limit on the number of marches per ray to prevent rays from travelling forever if they don&rsquo;t intersect an object. If a distance from the signed distance function becomes very large the ray may stop marching and the ray is deemed to be pointing into empty space, for extra optimisation.</p>
 <dl>
-<dt>Raymarching</dt>
+<dt>Ray marching</dt>
 <dd>A way to render a 3D scene</dd>
 <dd>Uses a signed distance function to define the scene with objects such as:</dd>
 <dd><ul>
@@ -71,30 +124,139 @@
 <li>Negative inside the object</li>
 </ul>
 </dd>
-<dd>The signed distance function of multiple objects is just the minimum distance between the objects</dd>
+<dd>The signed distance function of multiple objects is just the minimum distance returned from the signed distance functions of all objects</dd>
 <dd><ul>
 <li>Calculate the distance away from each object</li>
 </ul>
 </dd>
 <dd><ul>
-<li>Return the shortest out of those distances</li>
+<li>Return the shortest out of these distances</li>
 </ul>
 </dd>
 </dl>
-<p>Raymarching has some advantages over other forms of rendering because the space can be transformed more easily. For example by taking the modulus of the position into the signed distance function in the right way, you can repeat an object. This means you can have objects seemingly repeat forever, without much of a performance penalty. You can also do reflections and scaling, allowing you to render 3D fractals like the Sierpiński tetrahedron.</p>
+<p>The most simple useful signed distance function I know, is that of the sphere. Since a sphere is defined as a set of points which are all a radius (in distance) from the sphere&rsquo;s centre, we can use Pythagoras. Pythagoras works in any number of dimentions (in order to find the distance between a point and the origin) but for 3 dimentions we can find the distance a given point is from the origin using:
+\[\sqrt{x^2 + y^2 + z^2}\]
+But we want to be able to find the distance of a given point from the central point of the sphere, so we should use:
+\[\sqrt{(x - x_c)^2 + (y - y_c)^2 + (z - z_c)^2}\]
+Now we want it to be zero on the surface whereas at the moment it only tells us how far the point is from the centre, so we must subtract the radius. We end up with:
+\[\sqrt{(x - x_c)^2 + (y - y_c)^2 + (z - z_c)^2} - r\]
+where:</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\(x\)</td>
+<td>x of position inputted</td>
+</tr>
+<tr>
+<td>\(y\)</td>
+<td>y of position inputted</td>
+</tr>
+<tr>
+<td>\(z\)</td>
+<td>z of position inputted</td>
+</tr>
+<tr>
+<td>\(x_c\)</td>
+<td>x of sphere centre position</td>
+</tr>
+<tr>
+<td>\(y_c\)</td>
+<td>y of sphere centre position</td>
+</tr>
+<tr>
+<td>\(z_c\)</td>
+<td>z of sphere centre position</td>
+</tr>
+<tr>
+<td>\(r\)</td>
+<td>radius of the sphere</td>
+</tr>
+</tbody>
+</table>
+<p>In GLSL this sphere signed distance function could be written as</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">float</span> signedDistanceSphere(<span style="color:#66d9ef">vec3</span> position, <span style="color:#66d9ef">float</span> radius)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// GLSL has a function called length which takes a vector and tells you its length</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// meaning we don&#39;t have to do Pythagoras ourselves.</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Equivalent to: return sqrt(pow(position.x, 2.0) + pow(position.y, 2.0) + pow(position.z, 2.0)) - radius;</span>
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> length(position) <span style="color:#f92672">-</span> radius
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">float</span> signedDistance(<span style="color:#66d9ef">vec3</span> position)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> signedDistanceSphere(position, <span style="color:#ae81ff">1.0</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>To do two spheres at different locations we can just do</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">float</span> signedDistance(<span style="color:#66d9ef">vec3</span> position)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> min
+</span></span><span style="display:flex;"><span>	(
+</span></span><span style="display:flex;"><span>		signedDistanceSphere(position, <span style="color:#ae81ff">1.0</span>),
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Sphere with centre at (4, 0, 0) with a radius of 2</span>
+</span></span><span style="display:flex;"><span>		signedDistanceSphere(position <span style="color:#f92672">-</span> <span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">4.0</span>, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.0</span>), <span style="color:#ae81ff">2.0</span>)
+</span></span><span style="display:flex;"><span>	);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><img src="two-spheres.png" alt="Two spheres"></p>
+<p>Ray marching has some advantages over other forms of rendering because the space can be transformed more easily. A space transformation works by changing the input to a signed distance function.</p>
+<p>By translating the object to not fall over a boundary by taking away a vector from the point. Then taking the modulus (remainder) of the position into the signed distance function before finally translating back (by adding the previous vector). You can repeat an object. This means you can have objects seemingly repeat forever, without much of a performance penalty.</p>
+<p>You can think of this working by wrapping the ray. Shown below each segment of the ray between two boundaries is coloured so you can see where it would wrap back around into the first square. The grey circles show the appearence of the repeated object, the white circle shows the actual circle.</p>
+<p><img src="space-repetition-diagram.jpg" alt="Space Repetition Diagram"></p>
+<p>In practice you could make a helper function to do this for you:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">vec3</span> repeat(<span style="color:#66d9ef">vec3</span> position, <span style="color:#66d9ef">vec3</span> direction)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec3</span> repeated <span style="color:#f92672">=</span> position <span style="color:#f92672">+</span> direction.xyz <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.5</span>;
+</span></span><span style="display:flex;"><span>	direction <span style="color:#f92672">=</span> abs(direction);
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (direction.x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.0</span>)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		repeated.x <span style="color:#f92672">=</span> mod(repeated.x, direction.x) <span style="color:#f92672">-</span> direction.x <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.5</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (direction.y <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.0</span>)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		repeated.y <span style="color:#f92672">=</span> mod(repeated.y, direction.y) <span style="color:#f92672">-</span> direction.y <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.5</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (direction.z <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.0</span>)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		repeated.z <span style="color:#f92672">=</span> mod(repeated.z, direction.z) <span style="color:#f92672">-</span> direction.z <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.5</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> repeated;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And then use it like so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">float</span> signedDistance(<span style="color:#66d9ef">vec3</span> position)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> signedDistanceSphere
+</span></span><span style="display:flex;"><span>	(
+</span></span><span style="display:flex;"><span>		repeat
+</span></span><span style="display:flex;"><span>		(
+</span></span><span style="display:flex;"><span>			position,
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">4.0</span>, <span style="color:#ae81ff">4.0</span>, <span style="color:#ae81ff">4.0</span>)
+</span></span><span style="display:flex;"><span>		),
+</span></span><span style="display:flex;"><span>	 	<span style="color:#ae81ff">1.0</span>
+</span></span><span style="display:flex;"><span>	);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>You can also do reflections and scaling, allowing you to render 3D fractals like the Sierpiński tetrahedron.</p>
 <h2 id="showcase">Showcase</h2>
-<p>All the following examples I programmed as a fragment shader written in GLSL on <a href="www.shadertoy.com">Shadertoy</a>. This means it runs faster that it would have on my CPU, since GPUs have more cores. They are therefore more fit for casting lots of rays in parallel, despite each core usually having worse performance than a CPU.</p>
-<h3 id="simple-raymarcher">Simple raymarcher</h3>
+<p>All the following examples I programmed as a fragment shader written in GLSL on <a href="www.shadertoy.com">Shadertoy</a>. This means it runs faster that it would have on my CPU, since GPUs typically have more cores. They are therefore more suitable at marching lots of rays in parallel (at the same time), despite each core usually having worse performance than a CPU.</p>
+<h3 id="simple-ray-marcher-with-pixel-colour-only-based-on-distance">Simple ray marcher with pixel colour only based on distance</h3>
+<h4 id="sphere">Sphere</h4>
+<p><img src="ray-marching-sphere.png" alt="Ray marching sphere"></p>
 <h4 id="space-repetition">Space repetition</h4>
 <p>The following picture shows what I meant by being able to use the modulus operator to repeat an object.</p>
-<p><img src="/images/ray-marching.png" alt="3D space repetition"></p>
-<h3 id="raymarcher-with-basic-lighting">Raymarcher with basic lighting</h3>
-<p>Next I wanted to add lighting to the raymarcher.</p>
+<p><img src="icon.png" alt="3D space repetition"></p>
+<h3 id="ray-marcher-with-basic-lighting">Ray marcher with basic lighting</h3>
+<p>Next I wanted to add lighting to the ray marcher.</p>
 <p>This lighting uses the direction of the face of an object and compares it to the direction of a global light source to find how bright the surface should appear.</p>
 <p>To do this I calculate the normal vector to the surface, once a ray hits the surface of an object by doing the derivative of the signed distance function. Giving the direction of the face the ray landed on. Then I do the dot product between the light direction and the normal vector, to basically get how much the face is pointing in the direction of the light. Then colour it based on that.</p>
-<p><img src="/images/ray-marching-basic-lighting.png" alt="Basic lighting"></p>
+<p><img src="ray-marching-basic-lighting.png" alt="Basic lighting"></p>
 <p>This picture also shows how you can easily add and subtract objects from each other. This is using the maximum of two minimum distances from the two shapes (cube and sphere in this case) with the distance to the shape you want to be subtracted as a negative number. You can even combine shapes in a smooth way leading to the shapes kind of melding into each other.</p>
-<p><img src="/images/ray-marching-smooth-union.png" alt="Smooth union"></p>
+<p><img src="ray-marching-smooth-union.png" alt="Smooth union"></p>
 
 	</article>
 

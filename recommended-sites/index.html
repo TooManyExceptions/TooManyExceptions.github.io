@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/internal/css/style.css"/>
+		<link rel="stylesheet" href="/internal/css/dark.css" id="theme"/>
+
+		
+
+		<link rel="icon" type="image/x-icon" href="/internal/favicon/16x16.ico"/>
 
 		<title>Recommended Sites • Too Many Exceptions</title>
 	</head>
 	<body>
-		<div class="navigation">
+		<nav class="navigation">
 			Too Many Exceptions
-			<a href="/about">About</a>
 			<a href="/">Home</a>
-		</div>
+		</nav>
 
 		<br>
 		<hr>
@@ -24,6 +28,34 @@
 </nav>
 
 		<h1>Recommended Sites</h1>
+
+		<table>
+			
+			
+				<tr>
+					<td>Published</td>
+					<td>19/03/26</td>
+				</tr>
+			
+			
+				<tr>
+					<td>Last Modified</td>
+					<td>19/06/26</td>
+				</tr>
+			
+		</table>
+
+		
+
+		<p>Theme: <select id="themeSelector">
+			<option value="light">Light</option>
+			<option value="dark">Dark</option>
+		</select></p>
+		<script src="/internal/js/themeSwitcher.js"></script>
+
+		<br>
+		<hr>
+		<br>
 
 		
 	<article>
@@ -45,7 +77,7 @@
 <dt><a href="https://www.youtube.com/@PezzzasWork">Pezzza&rsquo;s Work</a></dt>
 <dd>Videos on AI networks, colony simulations, physics simulations and many more topics.</dd>
 <dt><a href="https://www.youtube.com/@3blue1brown">3Blue1Brown</a></dt>
-<dd>Primarily very well explained animated maths videos.</dd>
+<dd>Very well explained animated videos around maths and computer science.</dd>
 </dl>
 
 	</article>

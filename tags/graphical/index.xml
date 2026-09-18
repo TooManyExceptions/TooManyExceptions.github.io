@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Projects on Too Many Exceptions</title>
-    <link>https://TooManyExceptions.github.io/projects/</link>
-    <description>Recent content in Projects on Too Many Exceptions</description>
+    <title>Graphical on Too Many Exceptions</title>
+    <link>https://TooManyExceptions.github.io/tags/graphical/</link>
+    <description>Recent content in Graphical on Too Many Exceptions</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-uk</language>
     <lastBuildDate>Fri, 18 Sep 2026 20:14:20 +0100</lastBuildDate>
-    <atom:link href="https://TooManyExceptions.github.io/projects/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://TooManyExceptions.github.io/tags/graphical/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ray Marching</title>
       <link>https://TooManyExceptions.github.io/projects/ray-marching/</link>

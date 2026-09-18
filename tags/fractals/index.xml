@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fractals on Too Many Exceptions</title>
+    <link>https://TooManyExceptions.github.io/tags/fractals/</link>
+    <description>Recent content in Fractals on Too Many Exceptions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-uk</language>
+    <lastBuildDate>Tue, 28 Jul 2026 09:09:22 +0100</lastBuildDate>
+    <atom:link href="https://TooManyExceptions.github.io/tags/fractals/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>L Systems</title>
+      <link>https://TooManyExceptions.github.io/projects/l-systems/</link>
+      <pubDate>Tue, 17 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>https://TooManyExceptions.github.io/projects/l-systems/</guid>
+      <description>Explanation L systems carry out simple character to string replacements.&#xA;You begin with a string (called the axiom) and then loop though each character in the string. Each character is then replaced by a string based on some rules. This process is repeated however many times you would like, usually called the number of iterations or the depth.&#xA;Example Rules Character String A AB B A Iterations In the following example I have used the ^ character to show the current character the algorithm is looking at.</description>
+    </item>
+  </channel>
+</rss>

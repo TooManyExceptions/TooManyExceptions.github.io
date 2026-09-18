@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/internal/css/style.css"/>
+		<link rel="stylesheet" href="/internal/css/dark.css" id="theme"/>
+
+		
+
+		<link rel="icon" type="image/x-icon" href="/internal/favicon/16x16.ico"/>
 
 		<title>Projects • Too Many Exceptions</title>
 	</head>
 	<body>
-		<div class="navigation">
+		<nav class="navigation">
 			Too Many Exceptions
-			<a href="/about">About</a>
 			<a href="/">Home</a>
-		</div>
+		</nav>
 
 		<br>
 		<hr>
@@ -20,25 +24,60 @@
 
 		<h1>Projects</h1>
 
+		<table>
+			
+			
+				<tr>
+					<td>Published</td>
+					<td>14/03/26</td>
+				</tr>
+			
+			
+				<tr>
+					<td>Last Modified</td>
+					<td>19/06/26</td>
+				</tr>
+			
+		</table>
+
 		
-	<p>I really enjoy making projects and I&rsquo;m currently trying to write up information on each project I&rsquo;ve done.</p>
+
+		<p>Theme: <select id="themeSelector">
+			<option value="light">Light</option>
+			<option value="dark">Dark</option>
+		</select></p>
+		<script src="/internal/js/themeSwitcher.js"></script>
+
+		<br>
+		<hr>
+		<br>
+
+		
+	<article>
+		<p>I really enjoy making projects and I&rsquo;m currently trying to write up information on each project I&rsquo;ve done.</p>
+
+	</article>
 
 	<br>
 	<hr>
 	<br>
 
-	<div class="grid-container">
+	<div class="portfolio-grid-container">
 		
 			<a href="/projects/ray-marching/" class="levitate">
 				<figure>
-					<img src="/images/ray-marching.png">
+					
+						<img src="/projects/ray-marching/icon.png">
+					
 					<figcaption>Ray Marching<br>18/03/26</figcaption>
 				</figure>
 			</a>
 		
 			<a href="/projects/l-systems/" class="levitate">
 				<figure>
-					<img src="/images/l-systems.png">
+					
+						<img src="/projects/l-systems/icon.png">
+					
 					<figcaption>L Systems<br>17/03/26</figcaption>
 				</figure>
 			</a>

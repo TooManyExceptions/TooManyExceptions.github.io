@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/internal/css/style.css"/>
+		<link rel="stylesheet" href="/internal/css/dark.css" id="theme"/>
+
+		
+
+		<link rel="icon" type="image/x-icon" href="/internal/favicon/16x16.ico"/>
 
 		<title>L Systems • Too Many Exceptions</title>
 	</head>
 	<body>
-		<div class="navigation">
+		<nav class="navigation">
 			Too Many Exceptions
-			<a href="/about">About</a>
 			<a href="/">Home</a>
-		</div>
+		</nav>
 
 		<br>
 		<hr>
@@ -30,6 +34,48 @@
 </nav>
 
 		<h1>L Systems</h1>
+
+		<table>
+			
+				<tr>
+					<td>Project</td>
+					<td>26/03/22</td>
+				</tr>
+			
+			
+				<tr>
+					<td>Published</td>
+					<td>17/03/26</td>
+				</tr>
+			
+			
+				<tr>
+					<td>Last Modified</td>
+					<td>28/07/26</td>
+				</tr>
+			
+		</table>
+
+		
+			<p>Tags:</p>
+			<ul>
+			
+				<li><a href="/tags/fractals/">Fractals</a></li>
+			
+				<li><a href="/tags/graphical/">Graphical</a></li>
+			
+			</ul>
+		
+
+		<p>Theme: <select id="themeSelector">
+			<option value="light">Light</option>
+			<option value="dark">Dark</option>
+		</select></p>
+		<script src="/internal/js/themeSwitcher.js"></script>
+
+		<br>
+		<hr>
+		<br>
 
 		
 	<article>
@@ -120,7 +166,7 @@
 </table>
 <p>I also have an array of colours so that when the save character is read it changes to the next colour, and when the load character is read it changes to the previous colour. This wasn&rsquo;t necessary but I thought it looked cool.</p>
 <p>This generated a nicely detailed 2D fractal tree:</p>
-<p><img src="/images/2d-l-system.png" alt="2D L system"></p>
+<p><img src="2d-l-system.png" alt="2D L system"></p>
 <h2 id="3d-l-system">3D L system</h2>
 <p>I wanted to make an L system which was 3D, and after some playing around I found the following configuration.</p>
 <p>I added two more instructions to rotate along a different axis.</p>
@@ -166,7 +212,7 @@
 <p>F -&gt; FF+0[+F-F-F9]-0[-F+9F+F] <br>
 * -&gt; *</p>
 <p>This generated this 3D fractal plant thing, which I am very pleased with:</p>
-<p><img src="/images/l-systems.png" alt="3D L system"></p>
+<p><img src="icon.png" alt="3D L system"></p>
 <p>It looks fairly realistic in 3D. Especially after making the lines transparent and the background white, because this made more dense areas darker.</p>
 <p>In the future I would like to make an interface for generating and viewing L systems more easily, because at the moment they are hardcoded in the program.</p>
 
